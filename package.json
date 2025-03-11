@@ -1,0 +1,17 @@
+{
+  "name": "lab_task07",
+  "version": "1.0.0",
+  "main": "src/events.js",
+  "scripts": {
+    "start": "node src/events.js",
+    "test": "node testScript.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "Event Planner and Reminder System using Node.js",
+  "dependencies": {
+    "express": "^4.18.2",
+    "node-schedule": "^2.1.1"
+  }
+}
