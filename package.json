@@ -12,6 +12,7 @@
   "description": "Event Planner and Reminder System using Node.js",
   "dependencies": {
     "express": "^4.18.2",
+    "lab_task07": "file:",
     "node-schedule": "^2.1.1"
   }
 }
