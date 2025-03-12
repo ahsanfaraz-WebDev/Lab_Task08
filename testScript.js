@@ -4,7 +4,25 @@ const path = require("path");
 // File path for events
 const eventsFilePath = path.join(__dirname, "data/events.json");
 
+// Helper function to read events
+const readEvents = () => {
+  const data = fs.readFileSync(eventsFilePath);
+  return JSON.parse(data);
+};
 
+// Helper function to write events
+const writeEvents = (events) => {
+  fs.writeFileSync(eventsFilePath, JSON.stringify(events, null, 2));
+};
+
+// Simple authentication function (replicating events.js)
+const authenticateUser = (username, password) => {
+  if (username === "admin" && password === "password") {
+    return { username };
+  } else {
+    return null;
+  }
+};
 
 // Test cases
 console.log("Running Event Planner Tests...\n");
