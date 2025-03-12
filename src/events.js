@@ -9,29 +9,7 @@ app.use(express.json());
 // File path for events
 const eventsFilePath = path.join(__dirname, "../data/events.json");
 
-// Helper function to read events from file
-const readEvents = () => {
-  const data = fs.readFileSync(eventsFilePath);
-  return JSON.parse(data);
-};
-
-// Helper function to write events to file
-const writeEvents = (events) => {
-  fs.writeFileSync(eventsFilePath, JSON.stringify(events, null, 2));
-};
-
-// Simple authentication middleware using if-else
-const authenticateUser = (req, res, next) => {
-  const { username, password } = req.body;
-
-  // Hardcoded user for simplicity
-  if (username === "admin" && password === "password") {
-    req.user = { username };
-    next();
-  } else {
-    res.status(401).json({ message: "Invalid credentials" });
-  }
-};
+const { readEvents, writeEvents, authenticateUser } = require("./src/event.js");
 
 // Create an event
 app.post("/events", authenticateUser, (req, res) => {
