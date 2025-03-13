@@ -9,18 +9,15 @@ app.use(express.json());
 // File path for events
 const eventsFilePath = path.join(__dirname, "../data/events.json");
 
-// Helper function to read events from file
 const readEvents = () => {
   const data = fs.readFileSync(eventsFilePath);
   return JSON.parse(data);
 };
 
-// Helper function to write events to file
 const writeEvents = (events) => {
   fs.writeFileSync(eventsFilePath, JSON.stringify(events, null, 2));
 };
 
-// Simple authentication middleware using if-else
 const authenticateUser = (req, res, next) => {
   const { username, password } = req.body;
 
@@ -33,7 +30,6 @@ const authenticateUser = (req, res, next) => {
   }
 };
 
-// Create an event
 app.post("/events", authenticateUser, (req, res) => {
   const { name, description, date, time, category, reminder } = req.body;
   const events = readEvents();
@@ -52,10 +48,9 @@ app.post("/events", authenticateUser, (req, res) => {
   events.push(event);
   writeEvents(events);
 
-  // Schedule a reminder if requested
   if (reminder) {
     const eventDateTime = new Date(`${date}T${time}`);
-    const reminderDateTime = new Date(eventDateTime.getTime() - 15 * 60 * 1000); // 15 minutes before
+    const reminderDateTime = new Date(eventDateTime.getTime() - 15 * 60 * 1000);
     schedule.scheduleJob(reminderDateTime, () => {
       console.log(
         `Reminder: Event "${name}" is starting soon at ${time} on ${date}`
@@ -66,9 +61,9 @@ app.post("/events", authenticateUser, (req, res) => {
   res.status(201).json(event);
 });
 
-// View events (sorted by date, category, or reminder)
+
 app.get("/events", authenticateUser, (req, res) => {
-  const { sortBy } = req.query; // e.g., ?sortBy=date or ?sortBy=category
+  const { sortBy } = req.query; 
   let events = readEvents().filter((event) => event.user === req.user.username);
 
   if (sortBy === "date") {

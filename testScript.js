@@ -1,21 +1,17 @@
 const fs = require("fs");
 const path = require("path");
 
-// File path for events
 const eventsFilePath = path.join(__dirname, "data/events.json");
 
-// Helper function to read events
 const readEvents = () => {
   const data = fs.readFileSync(eventsFilePath);
   return JSON.parse(data);
 };
 
-// Helper function to write events
 const writeEvents = (events) => {
   fs.writeFileSync(eventsFilePath, JSON.stringify(events, null, 2));
 };
 
-// Simple authentication function (replicating events.js)
 const authenticateUser = (username, password) => {
   if (username === "admin" && password === "password") {
     return { username };
@@ -24,26 +20,24 @@ const authenticateUser = (username, password) => {
   }
 };
 
-// Test cases
 console.log("Running Event Planner Tests...\n");
 
 let testPassed = true;
 
-// Test 1: Authenticate a valid user
 console.log("Test 1: Authenticate a valid user");
 const user = authenticateUser("admin", "password");
 if (user && user.username === "admin") {
-  console.log("✓ Test 1 Passed: Valid user authenticated");
+  console.log("Test 1 Passed: Valid user authenticated");
 } else {
-  console.log("✗ Test 1 Failed: Invalid user authentication");
+  console.log("Test 1 Failed: Invalid user authentication");
   testPassed = false;
 }
 
 const invalidUser = authenticateUser("wronguser", "wrongpass");
 if (!invalidUser) {
-  console.log("✓ Test 1 Passed: Invalid credentials rejected");
+  console.log("Test 1 Passed: Invalid credentials rejected");
 } else {
-  console.log("✗ Test 1 Failed: Invalid credentials accepted");
+  console.log("Test 1 Failed: Invalid credentials accepted");
   testPassed = false;
 }
 
@@ -67,13 +61,13 @@ if (events.length === 0) {
 
   const updatedEvents = readEvents();
   if (updatedEvents.length === 1 && updatedEvents[0].name === "Test Event") {
-    console.log("✓ Test 2 Passed: Event created and saved successfully");
+    console.log("Test 2 Passed: Event created and saved successfully");
   } else {
-    console.log("✗ Test 2 Failed: Event not saved correctly");
+    console.log("Test 2 Failed: Event not saved correctly");
     testPassed = false;
   }
 } else {
-  console.log("✗ Test 2 Failed: Unable to clear events file");
+  console.log("Test 2 Failed: Unable to clear events file");
   testPassed = false;
 }
 
@@ -86,9 +80,9 @@ const testEvents = [
 writeEvents(testEvents);
 const userEvents = readEvents().filter((event) => event.user === "admin");
 if (userEvents.length === 1 && userEvents[0].name === "Event 1") {
-  console.log("✓ Test 3 Passed: Events filtered by user correctly");
+  console.log("Test 3 Passed: Events filtered by user correctly");
 } else {
-  console.log("✗ Test 3 Failed: Events not filtered correctly");
+  console.log("Test 3 Failed: Events not filtered correctly");
   testPassed = false;
 }
 
@@ -105,16 +99,16 @@ if (
   sortedEvents[0].date === "2025-03-12" &&
   sortedEvents[1].date === "2025-03-15"
 ) {
-  console.log("✓ Test 4 Passed: Events sorted by date correctly");
+  console.log("Test 4 Passed: Events sorted by date correctly");
 } else {
-  console.log("✗ Test 4 Failed: Events not sorted correctly");
+  console.log("Test 4 Failed: Events not sorted correctly");
   testPassed = false;
 }
 
 // Final result
 console.log("\nTest Summary");
 if (testPassed) {
-  console.log("✓ All tests passed!");
+  console.log("All tests passed!");
 } else {
   console.log("✗ Some tests failed. Please check the logs above.");
 }
